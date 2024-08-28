@@ -14,24 +14,21 @@ h2 {
 
 .input-group {
   display: flex;
-  margin-top: 20px;
   justify-content: center;
-}
-
-.task-input {
-  height: 40px;
+  align-items: center;
 }
 
 mat-form-field {
-  height: 70px;
+  margin-top: 20px;
 }
 
 .add-button {
   background-color: #4caf50;
-  height: 50px;
+  margin-left: 20px;
+  height: 56px;
   color: white;
   border: none;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
   padding: 8px 16px;
   font-size: 16px;
   cursor: pointer;
