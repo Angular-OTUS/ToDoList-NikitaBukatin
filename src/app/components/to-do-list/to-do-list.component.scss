@@ -9,6 +9,7 @@ h2 {
   padding: 0;
   margin: 0;
   max-width: 400px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -16,6 +17,13 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.list-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 mat-form-field {

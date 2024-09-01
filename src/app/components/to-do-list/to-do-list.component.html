@@ -1,14 +1,20 @@
 <div class="todo-container">
   <h2>{{ title }}</h2>
-  <ul class="task-list">
-      <app-to-do-list-item *ngFor="let task of tasks" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
-  </ul>
+
+  <div class="list-group">
+    <mat-spinner *ngIf="isLoading; else taskList" [diameter]="50"></mat-spinner>
+    <ng-template #taskList>
+      <ul class="task-list">
+          <app-to-do-list-item *ngFor="let task of tasks" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
+      </ul>
+    </ng-template>
+  </div>
 
   <div class="input-group">
     <mat-form-field appearance="outline">
       <mat-label>Введите задание</mat-label>
       <input matInput class="task-input" [(ngModel)]="newTask" (keydown.enter)="addTask()">
     </mat-form-field>
-      <button (click)="addTask()" [disabled]="!newTask.trim()" type="submit" id="add" class="add-button">Добавить задачу</button>
+      <app-button [buttonTitle]="'Добавить задачу'" (click)="addTask()"></app-button>
   </div>
 </div>
