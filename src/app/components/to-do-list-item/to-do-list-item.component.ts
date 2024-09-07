@@ -8,7 +8,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class ToDoListItemComponent {
   @Input({required: true}) listItem! : {id: number, text: string};
   @Output() newItemDelete = new EventEmitter<number>();
-  deleteFlag: boolean = true;
 
   deleteItem(id: number) {
     this.newItemDelete.emit(id);

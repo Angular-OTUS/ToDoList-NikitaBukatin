@@ -11,6 +11,9 @@ import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {SharedModule} from "./modules/shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     MatFormFieldModule,
     MatButtonModule,
     MatToolbarModule,
+    MatProgressSpinnerModule,
+    MatButtonToggleModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

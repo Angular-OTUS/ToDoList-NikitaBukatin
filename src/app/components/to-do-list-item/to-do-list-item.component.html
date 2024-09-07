@@ -1,4 +1,4 @@
 <li [class.second]="secondType(listItem.id)" class="task-item">
   <span>{{ listItem.text }}</span>
-  <button (click)="deleteItem(listItem.id)" [disabled]="!deleteFlag" class="deleteTask" aria-label="Удалить задачу">&times;</button>
+  <app-button [buttonTitle]="'&times;'" (click)="deleteItem(listItem.id)" aria-label="Удалить задачу"></app-button>
 </li>
