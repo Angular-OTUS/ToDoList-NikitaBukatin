@@ -1,4 +1,4 @@
-<li [class.second]="secondType(listItem.id)" class="task-item">
+<li [class.second]="secondItem" [class.selected]="isSelected" class="task-item">
   <span>{{ listItem.text }}</span>
-  <app-button [buttonTitle]="'&times;'" (click)="deleteItem(listItem.id)" aria-label="Удалить задачу"></app-button>
+  <app-button [buttonTitle]="'&times;'" [heightButton]="'30px'" appPrompt="Нажмите для удаления задания" (newButtonClick)="deleteItem(listItem.id)" aria-label="Удалить задачу"></app-button>
 </li>

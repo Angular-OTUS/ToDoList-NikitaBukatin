@@ -5,16 +5,25 @@
     <mat-spinner *ngIf="isLoading; else taskList" [diameter]="50"></mat-spinner>
     <ng-template #taskList>
       <ul class="task-list">
-          <app-to-do-list-item *ngFor="let task of tasks" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
+          <app-to-do-list-item *ngFor="let task of tasks; let odd = odd;" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
       </ul>
+      <div class="description-block">
+        <div class="description-text" *ngIf="selectedItemId !== null; else noDescription">{{ getSelectedTaskDescription() }}</div>
+        <ng-template #noDescription><div class="description-text">Выберите задачу для просмотра описания</div></ng-template>
+      </div>
     </ng-template>
   </div>
 
   <div class="input-group">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="task-input">
       <mat-label>Введите задание</mat-label>
-      <input matInput class="task-input" [(ngModel)]="newTask" (keydown.enter)="addTask()">
+      <input matInput [(ngModel)]="newTask" (keydown.enter)="addTask()">
     </mat-form-field>
-      <app-button [buttonTitle]="'Добавить задачу'" (click)="addTask()"></app-button>
+    <app-button class="task-button" [buttonTitle]="'Добавить задачу'" [heightButton]="'56px'" [buttonDisabled]="!newTask.trim()" appPrompt="Опишите задачу и добавьте по клику" (newButtonClick)="addTask()"></app-button>
+
+    <mat-form-field class="area-input" appearance="outline">
+      <mat-label>Описание задания</mat-label>
+      <textarea matInput [(ngModel)]="newDescription" placeholder="Добавьте описание"></textarea>
+    </mat-form-field>
   </div>
 </div>

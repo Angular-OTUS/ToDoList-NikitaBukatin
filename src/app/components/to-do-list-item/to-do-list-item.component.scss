@@ -53,3 +53,10 @@
 .task-item:hover {
   background-color: #f0f0f0;
 }
+
+.selected {
+  background-color: lightblue !important;
+}
+.selected:hover {
+  background-color: #c9dbe3 !important;
+}
