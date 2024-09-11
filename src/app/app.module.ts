@@ -19,7 +19,7 @@ import {SharedModule} from "./modules/shared/shared.module";
   declarations: [
     AppComponent,
     ToDoListComponent,
-    ToDoListItemComponent
+    ToDoListItemComponent,
   ],
   imports: [
     BrowserModule,
