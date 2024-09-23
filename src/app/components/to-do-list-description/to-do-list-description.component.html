@@ -1,0 +1,4 @@
+<div class="description-block">
+  <div class="description-text" *ngIf="selectedItemId !== null; else noDescription">{{ getSelectedTaskDescription() }}</div>
+  <ng-template #noDescription><div class="description-text">Выберите задачу для просмотра описания</div></ng-template>
+</div>

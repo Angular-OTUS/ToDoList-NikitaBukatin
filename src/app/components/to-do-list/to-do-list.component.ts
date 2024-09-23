@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {ToDoListTasksService} from "../../services/to-do-list-tasks.service";
+import {ToastsService} from "../../services/toasts.service";
 
 @Component({
   selector: 'app-to-do-list',
@@ -8,30 +10,32 @@ import {Component, OnInit} from '@angular/core';
 export class ToDoListComponent implements OnInit {
   title = "Список задач:";
   isLoading = true;
-  tasks: {id: number, text: string, description: string}[] = [
-    { id: 1, text: "Задача 1", description: "Описание первой задачи"},
-    { id: 2, text: "Задача 2", description: "Описание второй задачи"},
-    { id: 3, text: "Задача 3", description: "Описание третьей задачи"}
-  ];
   newTask = '';
   newDescription = '';
   selectedItemId: number | null = null;
-  foundTask: any;
+  tasks: any[] = [];
+
+  constructor(private todoListTasksService: ToDoListTasksService, private toastService: ToastsService) {}
 
   ngOnInit() {
     setTimeout(() => {this.isLoading = false;}, 500);
+
+    this.tasks = this.todoListTasksService.getTasks();
   }
 
   addTask() {
     if (this.newTask.trim()) {
-      this.tasks.push({ id: this.tasks.length + 1, text: this.newTask.trim(), description: this.newDescription});
+      this.todoListTasksService.setTask(this.newTask.trim(), this.newDescription);
+      this.toastService.showToast('Задание создано', 1);
       this.newTask = '';
       this.newDescription = '';
     }
   }
 
   deleteTask(idDel: number) {
-    this.tasks = this.tasks.filter(item => item.id !== idDel);
+    this.todoListTasksService.deleteTaskById(idDel);
+    this.tasks = this.todoListTasksService.getTasks();
+    this.toastService.showToast('Задание удалено', 2);
 
     if (this.selectedItemId === idDel) {
       this.selectedItemId = null;
@@ -42,8 +46,4 @@ export class ToDoListComponent implements OnInit {
     this.selectedItemId = selectedId;
   }
 
-  getSelectedTaskDescription(): string | undefined {
-    const selectedTask = this.tasks.find(task => task.id === this.selectedItemId);
-    return selectedTask ? selectedTask.description : undefined;
-  }
 }
