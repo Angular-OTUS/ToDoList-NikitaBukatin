@@ -7,10 +7,7 @@
       <ul class="task-list">
           <app-to-do-list-item *ngFor="let task of tasks; let odd = odd;" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
       </ul>
-      <div class="description-block">
-        <div class="description-text" *ngIf="selectedItemId !== null; else noDescription">{{ getSelectedTaskDescription() }}</div>
-        <ng-template #noDescription><div class="description-text">Выберите задачу для просмотра описания</div></ng-template>
-      </div>
+    <app-to-do-list-description [selectedItemId]="selectedItemId"/>
     </ng-template>
   </div>
 
@@ -26,4 +23,6 @@
       <textarea matInput [(ngModel)]="newDescription" placeholder="Добавьте описание"></textarea>
     </mat-form-field>
   </div>
+
+  <app-toasts/>
 </div>

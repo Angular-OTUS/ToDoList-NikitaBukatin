@@ -1,0 +1,5 @@
+<div class="toast-container">
+  <div *ngFor="let toast of getToasts()" class="toast-message" [ngClass]="getToastClass(toast.type)" (click)="removeToasts(toast.id)" id="toast-{{toast.id}}">
+    {{toast.text}}
+  </div>
+</div>

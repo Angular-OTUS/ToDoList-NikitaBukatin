@@ -1,4 +1,12 @@
-<li [class.second]="secondItem" [class.selected]="isSelected" class="task-item">
-  <span>{{ listItem.text }}</span>
+<li [class.second]="secondItem" [class.selected]="isSelected" (dblclick)="editTask()" class="task-item">
+  <span *ngIf="!isEdit">{{ listItem.text }}</span>
+
+  <ng-container *ngIf="isEdit">
+    <mat-form-field class="edit-task-input" subscriptSizing="dynamic">
+      <mat-label>Измените задание</mat-label>
+      <input matInput [(ngModel)]="editedTitle">
+    </mat-form-field>
+    <app-button [buttonTitle]="'Сохранить'" (click)="saveTask()" [buttonDisabled]="!editedTitle.trim()" appPrompt="Измените задачу и сохраните изменения"></app-button>
+  </ng-container>
   <app-button [buttonTitle]="'&times;'" [heightButton]="'30px'" appPrompt="Нажмите для удаления задания" (newButtonClick)="deleteItem(listItem.id)" aria-label="Удалить задачу"></app-button>
 </li>

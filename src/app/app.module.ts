@@ -14,12 +14,16 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {SharedModule} from "./modules/shared/shared.module";
+import { ToDoListDescriptionComponent } from './components/to-do-list-description/to-do-list-description.component';
+import { ToastsComponent } from './components/toasts/toasts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToDoListComponent,
     ToDoListItemComponent,
+    ToDoListDescriptionComponent,
+    ToastsComponent,
   ],
   imports: [
     BrowserModule,
