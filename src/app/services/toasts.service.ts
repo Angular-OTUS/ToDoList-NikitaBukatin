@@ -4,36 +4,31 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ToastsService {
+  private toasts: { id: number, text: string, type: number, isVisible: boolean}[] = [];
+  private currentToastId = 0;
 
   constructor() { }
 
-  public toasts: { id: number, text: string; type: number; }[] = [];
+  getToasts() {
+    return this.toasts;
+  }
 
-  showToast (text: string, type: number) {
-    const toastId = Date.now();
-    this.toasts.push({id: toastId, text: text, type: type})
-
+  addToast (text: string, type: number, lifeTime: number) {
+    const toastId = ++this.currentToastId;
+    this.toasts.push({id: toastId, text: text, type: type, isVisible: true})
+    const addedToast = this.toasts[this.toasts.length - 1];
     setTimeout(() => {
-      this.removeToastWithFade(toastId);
-    }, 10000);
+      //this.removeToastById(toastId);
+      addedToast.isVisible = false;
+    }, lifeTime);
+
+    return toastId;
   }
 
   removeToastById(toastId: number) {
     const index = this.toasts.findIndex(toast => toast.id === toastId);
     if (index !== -1) {
       this.toasts.splice(index, 1);
-    }
-  }
-
-  removeToastWithFade(index: number) {
-    const toastElement = document.getElementById(`toast-${index}`);
-
-    if (toastElement) {
-      toastElement.classList.add('fade-out');
-
-      setTimeout(() => {
-        this.removeToastById(index);
-      }, 500);
     }
   }
 

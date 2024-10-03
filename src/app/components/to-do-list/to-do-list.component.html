@@ -5,7 +5,11 @@
     <mat-spinner *ngIf="isLoading; else taskList" [diameter]="50"></mat-spinner>
     <ng-template #taskList>
       <ul class="task-list">
+        <ng-container *ngIf="tasks.length !== 0; else EmptyTasks">
           <app-to-do-list-item *ngFor="let task of tasks; let odd = odd;" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
+        </ng-container>
+
+        <ng-template #EmptyTasks><li> Заданий пока нет, но вы можете их добавить </li></ng-template>
       </ul>
     <app-to-do-list-description [selectedItemId]="selectedItemId"/>
     </ng-template>

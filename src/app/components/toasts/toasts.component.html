@@ -1,5 +1,5 @@
 <div class="toast-container">
-  <div *ngFor="let toast of getToasts()" class="toast-message" [ngClass]="getToastClass(toast.type)" (click)="removeToasts(toast.id)" id="toast-{{toast.id}}">
+  <div *ngFor="let toast of this.toasts" class="toast-message" [ngClass]="getToastClass(toast.type)" [@fadeAnimation]="toast.isVisible ? 'visible' : 'hidden'" (@fadeAnimation.done)="onAnimationDone($event, toast.id)" (click)="toastFade(toast.id)">
     {{toast.text}}
   </div>
 </div>

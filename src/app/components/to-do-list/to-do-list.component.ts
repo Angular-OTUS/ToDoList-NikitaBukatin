@@ -26,7 +26,7 @@ export class ToDoListComponent implements OnInit {
   addTask() {
     if (this.newTask.trim()) {
       this.todoListTasksService.setTask(this.newTask.trim(), this.newDescription);
-      this.toastService.showToast('Задание создано', 1);
+      this.toastService.addToast('Задание создано', 1, 10000);
       this.newTask = '';
       this.newDescription = '';
     }
@@ -35,7 +35,7 @@ export class ToDoListComponent implements OnInit {
   deleteTask(idDel: number) {
     this.todoListTasksService.deleteTaskById(idDel);
     this.tasks = this.todoListTasksService.getTasks();
-    this.toastService.showToast('Задание удалено', 2);
+    this.toastService.addToast('Задание удалено', 2, 10000);
 
     if (this.selectedItemId === idDel) {
       this.selectedItemId = null;

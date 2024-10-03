@@ -1,20 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ToastsService} from "../../services/toasts.service";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-toasts',
   templateUrl: './toasts.component.html',
-  styleUrls: ['./toasts.component.scss']
+  styleUrls: ['./toasts.component.scss'],
+  animations: [
+    trigger('fadeAnimation', [
+      state('visible', style({
+        opacity: 1,
+        transform: 'translateY(0)'
+      })),
+      state('hidden', style({
+        opacity: 0,
+        transform: 'translateY(-10px)'
+      })),
+      transition('visible => hidden', [
+        animate('500ms ease-out')
+      ]),
+      transition('hidden => visible', [
+        animate('500ms ease-in')
+      ])
+    ])
+  ]
 })
-export class ToastsComponent {
-  constructor( private toastService : ToastsService) {}
+export class ToastsComponent implements OnInit {
+  public toasts: any[] = [];
 
-  getToasts() {
-    return this.toastService.toasts;
+  constructor( protected toastService : ToastsService) {}
+
+  ngOnInit() {
+    this.toasts = this.toastService.getToasts();
   }
 
-  removeToasts(index: number) {
-   this.toastService.removeToastWithFade(index);
+  toastFade(toastId: number) {
+    const toast = this.toasts.find(toast => toast.id === toastId);
+    if (toast) {
+      toast.isVisible = false;
+    }
+  }
+
+  onAnimationDone(event: any, toastId: number) {
+    if (event.toState === 'hidden') {
+      this.toastService.removeToastById(toastId);
+    }
   }
 
   getToastClass(type: number): string {

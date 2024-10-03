@@ -27,8 +27,10 @@ export class ToDoListItemComponent {
 
   saveTask() {
     if (this.editedTitle.trim()) {
-      this.listItem.text = this.editedTitle;
-      this.toastService.showToast('Задание изменено', 1);
+      if (this.listItem.text !== this.editedTitle) {
+        this.listItem.text = this.editedTitle;
+        this.toastService.addToast('Задание изменено', 1, 10000);
+      }
       this.isEdit = false;
     }
   }

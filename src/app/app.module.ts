@@ -27,6 +27,7 @@ import { ToastsComponent } from './components/toasts/toasts.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
