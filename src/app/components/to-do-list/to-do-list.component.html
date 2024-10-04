@@ -2,31 +2,44 @@
   <h2>{{ title }}</h2>
 
   <div class="list-group">
-    <mat-spinner *ngIf="isLoading; else taskList" [diameter]="50"></mat-spinner>
+    <ng-container *ngIf="isLoading; else taskList"><app-loading-spinner [diameter]="70"/></ng-container>
     <ng-template #taskList>
-      <ul class="task-list">
-        <ng-container *ngIf="tasks.length !== 0; else EmptyTasks">
-          <app-to-do-list-item *ngFor="let task of tasks; let odd = odd;" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
-        </ng-container>
+      <div class="filter-block">
+        <div class="task-list">
+        <div class="filter-status">
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-select [(ngModel)]="selectedStatus" >
+              <mat-option [value]="null">Все</mat-option>
+              <mat-option [value]="'Completed'">Выполненные</mat-option>
+              <mat-option [value]="'InProgress'">Не выполненные</mat-option>
+            </mat-select>
+            <mat-label>Выберите фильтр</mat-label>
+          </mat-form-field>
+        </div>
+        </div>
+        <div class="description-block">
 
-        <ng-template #EmptyTasks><li> Заданий пока нет, но вы можете их добавить </li></ng-template>
-      </ul>
-    <app-to-do-list-description [selectedItemId]="selectedItemId"/>
+        </div>
+      </div>
+      <div class="task-block">
+        <div class="task-list">
+          <ul>
+            <ng-container *ngIf="tasks.length !== 0; else EmptyTasks">
+              <ng-container *ngFor="let task of tasks; let odd = odd;">
+                <app-to-do-list-item *ngIf="!selectedStatus || task.status === selectedStatus" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
+              </ng-container>
+            </ng-container>
+
+            <ng-template #EmptyTasks><li style="display: flex;"> Заданий пока нет, но вы можете их добавить </li></ng-template>
+          </ul>
+        </div>
+
+        <app-to-do-list-description [selectedItemId]="selectedItemId"/>
+      </div>
     </ng-template>
   </div>
 
-  <div class="input-group">
-    <mat-form-field appearance="outline" class="task-input">
-      <mat-label>Введите задание</mat-label>
-      <input matInput [(ngModel)]="newTask" (keydown.enter)="addTask()">
-    </mat-form-field>
-    <app-button class="task-button" [buttonTitle]="'Добавить задачу'" [heightButton]="'56px'" [buttonDisabled]="!newTask.trim()" appPrompt="Опишите задачу и добавьте по клику" (newButtonClick)="addTask()"></app-button>
-
-    <mat-form-field class="area-input" appearance="outline">
-      <mat-label>Описание задания</mat-label>
-      <textarea matInput [(ngModel)]="newDescription" placeholder="Добавьте описание"></textarea>
-    </mat-form-field>
-  </div>
+  <app-to-do-create-item></app-to-do-create-item>
 
   <app-toasts/>
 </div>

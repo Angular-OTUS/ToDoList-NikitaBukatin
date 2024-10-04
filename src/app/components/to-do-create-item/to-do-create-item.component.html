@@ -1,0 +1,17 @@
+<div class="input-group">
+  <form #taskForm="ngForm" class="task-block">
+    <div class="task-list">
+      <mat-form-field appearance="outline" class="task-input">
+        <mat-label>Введите задание</mat-label>
+        <input matInput name="task" [(ngModel)]="newTask" (keydown.enter)="addTask()" required minlength="3">
+      </mat-form-field>
+      <app-button class="task-button" [heightButton]="'56px'" [buttonDisabled]="!taskForm.valid" appPrompt="Опишите задачу и добавьте по клику" (newButtonClick)="addTask()">Добавить задачу</app-button>
+    </div>
+    <div class="description-block">
+      <mat-form-field class="area-input" appearance="outline">
+        <mat-label>Описание задания</mat-label>
+        <textarea matInput name="description" [(ngModel)]="newDescription" placeholder="Добавьте описание"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</div>

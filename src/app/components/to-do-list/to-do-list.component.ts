@@ -10,31 +10,23 @@ import {ToastsService} from "../../services/toasts.service";
 export class ToDoListComponent implements OnInit {
   title = "Список задач:";
   isLoading = true;
-  newTask = '';
-  newDescription = '';
   selectedItemId: number | null = null;
   tasks: any[] = [];
+  selectedStatus: string | null = null;
 
   constructor(private todoListTasksService: ToDoListTasksService, private toastService: ToastsService) {}
 
   ngOnInit() {
     setTimeout(() => {this.isLoading = false;}, 500);
 
-    this.tasks = this.todoListTasksService.getTasks();
-  }
-
-  addTask() {
-    if (this.newTask.trim()) {
-      this.todoListTasksService.setTask(this.newTask.trim(), this.newDescription);
-      this.toastService.addToast('Задание создано', 1, 10000);
-      this.newTask = '';
-      this.newDescription = '';
-    }
+    this.todoListTasksService.getTasks().subscribe((tasks) => {
+      this.tasks = tasks;
+    });
   }
 
   deleteTask(idDel: number) {
     this.todoListTasksService.deleteTaskById(idDel);
-    this.tasks = this.todoListTasksService.getTasks();
+    //this.tasks = this.todoListTasksService.getTasks();
     this.toastService.addToast('Задание удалено', 2, 10000);
 
     if (this.selectedItemId === idDel) {

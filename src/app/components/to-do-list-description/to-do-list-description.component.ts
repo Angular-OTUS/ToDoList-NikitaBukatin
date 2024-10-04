@@ -7,12 +7,18 @@ import {ToDoListTasksService} from "../../services/to-do-list-tasks.service";
   styleUrls: ['./to-do-list-description.component.scss']
 })
 export class ToDoListDescriptionComponent {
-@Input() selectedItemId : number | null = null;
+  @Input() selectedItemId : number | null = null;
+  selectedTaskDescription: string | null | undefined;
 
-constructor(private todoListTasksService: ToDoListTasksService) {}
+  constructor(private todoListTasksService: ToDoListTasksService) {}
 
-getSelectedTaskDescription(): string | null | undefined {
-  const selectedTask = this.selectedItemId !== null ? this.todoListTasksService.getTaskById(this.selectedItemId) : undefined;
-  return selectedTask ? selectedTask.description : undefined;
-}
+  getSelectedTaskDescription() {
+    if (this.selectedItemId !== null) {
+      this.todoListTasksService.getTaskById(this.selectedItemId).subscribe((task) => {
+        this.selectedTaskDescription = task?.description;
+      });
+    } else {
+      this.selectedTaskDescription = undefined;
+    }
+  }
 }
