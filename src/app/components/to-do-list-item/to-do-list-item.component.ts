@@ -14,7 +14,6 @@ export class ToDoListItemComponent {
   @Output() newItemDelete = new EventEmitter<number>();
   isEdit = false;
   editedTitle = '';
-  checked = false;
 
   constructor(private toastService : ToastsService, private todoListTasksService: ToDoListTasksService) {}
 
@@ -31,12 +30,13 @@ export class ToDoListItemComponent {
     if (this.editedTitle.trim()) {
       if (this.listItem.text !== this.editedTitle) {
         this.listItem.text = this.editedTitle;
+        this.todoListTasksService.updateTitleById(this.listItem.id, this.listItem.text).subscribe();
         this.toastService.addToast('Задание изменено', 1, 10000);
       }
       this.isEdit = false;
     }
   }
   onStatusChange() {
-    this.todoListTasksService.changeTaskStatus(this.listItem.id);
+    this.todoListTasksService.changeStatusById(this.listItem.id);
   }
 }

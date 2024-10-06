@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {ToDoListTasksService} from "../../services/to-do-list-tasks.service";
 import {ToastsService} from "../../services/toasts.service";
 import {NgForm} from "@angular/forms";
@@ -9,6 +9,7 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./to-do-create-item.component.scss']
 })
 export class ToDoCreateItemComponent {
+  @Output() taskAdded: EventEmitter<void> = new EventEmitter<void>();
   newTask = '';
   newDescription = '';
   @ViewChild('taskForm') taskForm?: NgForm;
@@ -17,13 +18,11 @@ export class ToDoCreateItemComponent {
 
   addTask() {
     if (this.taskForm?.valid) {
-      this.todoListTasksService.setTask(this.newTask.trim(), this.newDescription);
+      this.todoListTasksService.setTask(this.newTask.trim(), this.newDescription).subscribe(() => {
+        this.taskAdded.emit();
+      });
       this.toastService.addToast('Задание создано', 1, 10000);
-      this.newTask = '';
-      this.newDescription = '';
-      this.taskForm.reset();
+      this.taskForm.resetForm();
     }
   }
-
-  protected readonly onsubmit = onsubmit;
 }

@@ -1,26 +1,26 @@
 {
   "tasks": [
     {
-      "id": 1,
+      "id": "d719",
       "text": "Task 1",
-      "description": "Description for task 1",
-      "status": "InProgress"
-    },
-    {
-      "id": 2,
-      "text": "Task 2",
-      "description": "Description for task 2",
+      "description": null,
       "status": "Completed"
     },
     {
-      "id": "afab",
-      "text": "123",
-      "description": "",
+      "id": "8baa",
+      "text": "Task 2",
+      "description": "Описание для 2 задачи",
+      "status": "Completed"
+    },
+    {
+      "id": "5809",
+      "text": "Task 3",
+      "description": "Описание для 3 задачи",
       "status": "InProgress"
     },
     {
-      "id": "a88d",
-      "text": "123",
+      "id": "afe8",
+      "text": "Task 4",
       "description": "",
       "status": "InProgress"
     }
