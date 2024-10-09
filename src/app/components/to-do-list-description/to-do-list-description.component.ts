@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {ToDoListTasksService} from "../../services/to-do-list-tasks.service";
 
 @Component({
   selector: 'app-to-do-list-description',
@@ -7,12 +6,5 @@ import {ToDoListTasksService} from "../../services/to-do-list-tasks.service";
   styleUrls: ['./to-do-list-description.component.scss']
 })
 export class ToDoListDescriptionComponent {
-@Input() selectedItemId : number | null = null;
-
-constructor(private todoListTasksService: ToDoListTasksService) {}
-
-getSelectedTaskDescription(): string | null | undefined {
-  const selectedTask = this.selectedItemId !== null ? this.todoListTasksService.getTaskById(this.selectedItemId) : undefined;
-  return selectedTask ? selectedTask.description : undefined;
-}
+  @Input({required: true}) description?: string | null = null;
 }

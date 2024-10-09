@@ -1,32 +1,60 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+
+export interface Task {
+  id: number;
+  text: string;
+  description: string | null;
+  status: "InProgress" | "Completed";
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToDoListTasksService {
+  private apiUrl = 'http://localhost:3000/tasks';
+  http = inject(HttpClient);
+  //constructor(private http: HttpClient) {}
 
-  constructor() { }
-
-  private tasks: {id: number, text: string, description: string | null}[] = [
-    { id: 1, text: "Задача 1", description: "Описание первой задачи"},
-    { id: 2, text: "Задача 2", description: "Описание второй задачи"},
-    { id: 3, text: "Задача 3", description: "Описание третьей задачи"}
-  ];
-
-  setTask(taskText: string, taskDescription: string | null) {
-    this.tasks.push({ id: this.tasks.length + 1, text: taskText.trim(), description: taskDescription});
+  getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.apiUrl}`);
   }
 
-  getTasks() {
-    return this.tasks;
+  getTaskById(id: number): Observable<Task[]> {
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.get<Task[]>(`${this.apiUrl}`, {
+      params
+    });
   }
 
-  getTaskById(id: number) {
-    return this.tasks.find(task => task.id === id);
+  setTask(taskText: string, taskDescription: string | null): Observable<Task> {
+    const newTask = {
+      text: taskText.trim(),
+      description: taskDescription,
+      status: 'InProgress'
+    };
+
+    return this.http.post<Task>(this.apiUrl, newTask);
   }
 
-  deleteTaskById(id: number) {
-    this.tasks = this.tasks.filter(item => item.id !== id);
+  deleteTaskById(id: number): Observable<Task> {
+    console.log(id);
+    return this.http.delete<Task>(`${this.apiUrl}/${id}`);
   }
 
+  updateTitleById(id: number, text: string): Observable<Partial<Task>> {
+    const taskUpdate = { text };
+    return this.http.patch<Partial<Task>>(`${this.apiUrl}/${id}`, taskUpdate)
+  }
+
+  changeStatusById(id:number) {
+    this.http.get<Task>(`${this.apiUrl}/${id}`).subscribe(task => {
+      const newStatus = task.status === 'InProgress' ? 'Completed' : 'InProgress';
+      const updatedTask = { ...task, status: newStatus };
+
+      this.http.patch<Task>(`${this.apiUrl}/${id}`, updatedTask).subscribe();
+    });
+  }
 }

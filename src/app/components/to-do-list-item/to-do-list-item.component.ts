@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ToastsService} from "../../services/toasts.service";
+import {ToDoListTasksService} from "../../services/to-do-list-tasks.service";
 
 @Component({
   selector: 'app-to-do-list-item',
@@ -7,14 +8,14 @@ import {ToastsService} from "../../services/toasts.service";
   styleUrls: ['./to-do-list-item.component.scss']
 })
 export class ToDoListItemComponent {
-  @Input({required: true}) listItem! : {id: number, text: string , description: string};
+  @Input({required: true}) listItem! : any;
   @Input() secondItem  = false;
   @Input() isSelected  = false;
   @Output() newItemDelete = new EventEmitter<number>();
   isEdit = false;
   editedTitle = '';
 
-  constructor(private toastService : ToastsService) {}
+  constructor(private toastService : ToastsService, private todoListTasksService: ToDoListTasksService) {}
 
   deleteItem(id: number) {
     this.newItemDelete.emit(id);
@@ -27,9 +28,15 @@ export class ToDoListItemComponent {
 
   saveTask() {
     if (this.editedTitle.trim()) {
-      this.listItem.text = this.editedTitle;
-      this.toastService.showToast('Задание изменено', 1);
+      if (this.listItem.text !== this.editedTitle) {
+        this.listItem.text = this.editedTitle;
+        this.todoListTasksService.updateTitleById(this.listItem.id, this.listItem.text).subscribe();
+        this.toastService.addToast('Задание изменено', 1, 10000);
+      }
       this.isEdit = false;
     }
+  }
+  onStatusChange() {
+    this.todoListTasksService.changeStatusById(this.listItem.id);
   }
 }

@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "id": "d719",
+      "text": "Task 1",
+      "description": null,
+      "status": "Completed"
+    },
+    {
+      "id": "8baa",
+      "text": "Task 2",
+      "description": "Описание для 2 задачи",
+      "status": "Completed"
+    },
+    {
+      "id": "5809",
+      "text": "Task 3",
+      "description": "Описание для 3 задачи",
+      "status": "InProgress"
+    },
+    {
+      "id": "afe8",
+      "text": "Task 4",
+      "description": "",
+      "status": "InProgress"
+    }
+  ]
+}

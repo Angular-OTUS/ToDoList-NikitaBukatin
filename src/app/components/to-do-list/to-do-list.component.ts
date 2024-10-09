@@ -10,40 +10,45 @@ import {ToastsService} from "../../services/toasts.service";
 export class ToDoListComponent implements OnInit {
   title = "Список задач:";
   isLoading = true;
-  newTask = '';
-  newDescription = '';
   selectedItemId: number | null = null;
+  currentDescription?: string | null = null;
   tasks: any[] = [];
+  selectedStatus: string | null = null;
 
-  constructor(private todoListTasksService: ToDoListTasksService, private toastService: ToastsService) {}
-
-  ngOnInit() {
-    setTimeout(() => {this.isLoading = false;}, 500);
-
-    this.tasks = this.todoListTasksService.getTasks();
+  constructor(private todoListTasksService: ToDoListTasksService, private toastService: ToastsService) {
+    this.todoListTasksService.getTasks().subscribe((tasks) => {
+      this.tasks = tasks;
+    })
   }
 
-  addTask() {
-    if (this.newTask.trim()) {
-      this.todoListTasksService.setTask(this.newTask.trim(), this.newDescription);
-      this.toastService.showToast('Задание создано', 1);
-      this.newTask = '';
-      this.newDescription = '';
-    }
+  ngOnInit(): void {
+    setTimeout(() => {this.isLoading = false;}, 500);
+
+    /*this.todoListTasksService.tasks$.subscribe((tasks) => {
+      this.tasks = tasks;
+    });
+    this.todoListTasksService.getTasks();*/
+  }
+
+  refreshTaskList(): void {
+    this.todoListTasksService.getTasks().subscribe((tasks) => {
+      this.tasks = tasks;
+    });
   }
 
   deleteTask(idDel: number) {
-    this.todoListTasksService.deleteTaskById(idDel);
-    this.tasks = this.todoListTasksService.getTasks();
-    this.toastService.showToast('Задание удалено', 2);
-
+    this.todoListTasksService.deleteTaskById(idDel).subscribe(() => {
+      this.refreshTaskList();
+    });
+    this.toastService.addToast('Задание удалено', 2, 10000);
     if (this.selectedItemId === idDel) {
       this.selectedItemId = null;
     }
   }
 
-  selectItem(selectedId: number) {
+  selectItem(selectedId: number, desc?: string | null) {
     this.selectedItemId = selectedId;
+    this.currentDescription = desc;
   }
 
 }

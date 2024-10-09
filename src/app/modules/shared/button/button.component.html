@@ -1,1 +1,3 @@
-<mat-button-toggle style="align-items: center" [ngStyle]="{'height': heightButton}" [disabled]="buttonDisabled" (click)="buttonClick()">{{ buttonTitle }}</mat-button-toggle>
+<mat-button-toggle style="align-items: center" [ngStyle]="{'height': heightButton}" [disabled]="buttonDisabled" (click)="buttonClick()">
+  <ng-content></ng-content>
+</mat-button-toggle>
