@@ -5,32 +5,33 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 export interface Task {
   id: number;
   text: string;
-  description: string | null;
-  status: "InProgress" | "Completed";
+  description?: string;
+  status: TaskStatus;
 }
+
+export type TaskStatus = 'InProgress' | 'Completed';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToDoListTasksService {
-  private apiUrl = 'http://localhost:3000/tasks';
-  http = inject(HttpClient);
-  //constructor(private http: HttpClient) {}
+  private apiUrl: string = 'http://localhost:3000/tasks';
+  http: HttpClient = inject(HttpClient);
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.apiUrl}`);
   }
 
   getTaskById(id: number): Observable<Task[]> {
-    let params = new HttpParams();
+    let params: HttpParams = new HttpParams();
     params = params.append('id', id);
     return this.http.get<Task[]>(`${this.apiUrl}`, {
       params
     });
   }
 
-  setTask(taskText: string, taskDescription: string | null): Observable<Task> {
-    const newTask = {
+  setTask(taskText: string, taskDescription?: string): Observable<Task> {
+    const newTask: Omit<Task, 'id'> = {
       text: taskText.trim(),
       description: taskDescription,
       status: 'InProgress'
@@ -40,19 +41,17 @@ export class ToDoListTasksService {
   }
 
   deleteTaskById(id: number): Observable<Task> {
-    console.log(id);
     return this.http.delete<Task>(`${this.apiUrl}/${id}`);
   }
 
   updateTitleById(id: number, text: string): Observable<Partial<Task>> {
-    const taskUpdate = { text };
-    return this.http.patch<Partial<Task>>(`${this.apiUrl}/${id}`, taskUpdate)
+    return this.http.patch<Partial<Task>>(`${this.apiUrl}/${id}`, { text })
   }
 
-  changeStatusById(id:number) {
+  changeStatusById(id:number): void {
     this.http.get<Task>(`${this.apiUrl}/${id}`).subscribe(task => {
-      const newStatus = task.status === 'InProgress' ? 'Completed' : 'InProgress';
-      const updatedTask = { ...task, status: newStatus };
+      const newStatus: TaskStatus = task.status === 'InProgress' ? 'Completed' : 'InProgress';
+      const updatedTask: Task = { ...task, status: newStatus };
 
       this.http.patch<Task>(`${this.apiUrl}/${id}`, updatedTask).subscribe();
     });

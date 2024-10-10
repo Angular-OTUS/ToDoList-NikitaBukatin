@@ -24,13 +24,13 @@
       <div class="task-block">
         <div class="task-list">
           <ul>
-            <ng-container *ngIf="tasks.length !== 0; else EmptyTasks">
+            <ng-container *ngIf="tasks.length; else EmptyTasks">
               <ng-container *ngFor="let task of tasks; let odd = odd;">
                 <app-to-do-list-item *ngIf="!selectedStatus || task.status === selectedStatus" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id, task.description)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
               </ng-container>
             </ng-container>
 
-            <ng-template #EmptyTasks><li style="display: flex;"> Заданий пока нет, но вы можете их добавить </li></ng-template>
+            <ng-template #EmptyTasks><li class="empty-task"> Заданий пока нет, но вы можете их добавить </li></ng-template>
           </ul>
         </div>
 

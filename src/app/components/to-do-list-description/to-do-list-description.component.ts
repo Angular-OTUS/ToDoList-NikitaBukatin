@@ -6,5 +6,5 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./to-do-list-description.component.scss']
 })
 export class ToDoListDescriptionComponent {
-  @Input({required: true}) description?: string | null = null;
+  @Input({required: true}) description?: string;
 }
