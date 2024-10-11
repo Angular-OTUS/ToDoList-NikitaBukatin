@@ -1,6 +1,6 @@
 <li [class.second]="secondItem" [class.selected]="isSelected" class="task-item">
 
-    <mat-checkbox (change)="onStatusChange()" [checked]="this.listItem.status === 'Completed'"></mat-checkbox>
+    <mat-checkbox (click)="$event.stopPropagation()" (change)="onStatusChange()" [checked]="this.listItem.status === 'Completed'"></mat-checkbox>
 
   <span *ngIf="!isEdit; else editing"  (dblclick)="editTask()" >{{ listItem.text }}</span>
 

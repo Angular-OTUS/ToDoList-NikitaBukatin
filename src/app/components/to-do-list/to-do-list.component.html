@@ -26,7 +26,7 @@
           <ul>
             <ng-container *ngIf="tasks.length; else EmptyTasks">
               <ng-container *ngFor="let task of tasks; let odd = odd;">
-                <app-to-do-list-item *ngIf="!selectedStatus || task.status === selectedStatus" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id, task.description)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
+                <app-to-do-list-item *ngIf="!selectedStatus || task.status === selectedStatus" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
               </ng-container>
             </ng-container>
 
@@ -34,7 +34,7 @@
           </ul>
         </div>
 
-        <app-to-do-list-description [description]="currentDescription"/>
+        <router-outlet></router-outlet>
       </div>
     </ng-template>
   </div>

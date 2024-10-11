@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {ToastsService} from "../../services/toasts.service";
 import {Task, ToDoListTasksService} from "../../services/to-do-list-tasks.service";
 import {catchError, of, Subject, takeUntil} from "rxjs";
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-to-do-list-item',
@@ -12,14 +13,14 @@ export class ToDoListItemComponent implements OnDestroy {
   @Input({required: true}) listItem!: Task;
   @Input() secondItem?: boolean;
   @Input() isSelected?: boolean;
-  @Output() newItemDelete: EventEmitter<number> = new EventEmitter<number>();
+  @Output() newItemDelete: EventEmitter<string> = new EventEmitter<string>();
   private destroy$: Subject<void> = new Subject<void>();
   isEdit: boolean = false;
   editedTitle: string = '';
 
   constructor(private toastService : ToastsService, private todoListTasksService: ToDoListTasksService) {}
 
-  public deleteItem(id: number): void {
+  public deleteItem(id: string): void {;
     this.newItemDelete.emit(id);
   }
 

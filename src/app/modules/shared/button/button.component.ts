@@ -10,7 +10,8 @@ export class ButtonComponent {
  @Input() heightButton: string  = "";
  @Output() newButtonClick: EventEmitter<boolean> = new EventEmitter<boolean>;
 
-  buttonClick(): void {
+  buttonClick(event: Event): void {
+    event.stopPropagation();
     this.newButtonClick.emit();
   }
 }
