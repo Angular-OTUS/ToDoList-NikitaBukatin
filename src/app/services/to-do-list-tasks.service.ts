@@ -1,36 +1,34 @@
-import {inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {inject, Injectable, OnDestroy} from '@angular/core';
+import {Observable, Subject, takeUntil} from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
 export interface Task {
-  id: number;
+  id: string;
   text: string;
-  description: string | null;
-  status: "InProgress" | "Completed";
+  description?: string;
+  status: TaskStatus;
 }
+
+export type TaskStatus = 'InProgress' | 'Completed';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ToDoListTasksService {
-  private apiUrl = 'http://localhost:3000/tasks';
-  http = inject(HttpClient);
-  //constructor(private http: HttpClient) {}
+export class ToDoListTasksService implements OnDestroy {
+  private apiUrl: string = 'http://localhost:3000/tasks';
+  private destroy$: Subject<void> = new Subject<void>();
+  http: HttpClient = inject(HttpClient);
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.apiUrl}`);
   }
 
-  getTaskById(id: number): Observable<Task[]> {
-    let params = new HttpParams();
-    params = params.append('id', id);
-    return this.http.get<Task[]>(`${this.apiUrl}`, {
-      params
-    });
+  getTaskById(id: string): Observable<Task> {
+    return this.http.get<Task>(`${this.apiUrl}/${id}`);
   }
 
-  setTask(taskText: string, taskDescription: string | null): Observable<Task> {
-    const newTask = {
+  setTask(taskText: string, taskDescription?: string): Observable<Task> {
+    const newTask: Omit<Task, 'id'> = {
       text: taskText.trim(),
       description: taskDescription,
       status: 'InProgress'
@@ -39,22 +37,29 @@ export class ToDoListTasksService {
     return this.http.post<Task>(this.apiUrl, newTask);
   }
 
-  deleteTaskById(id: number): Observable<Task> {
-    console.log(id);
+  deleteTaskById(id: string): Observable<Task> {
     return this.http.delete<Task>(`${this.apiUrl}/${id}`);
   }
 
-  updateTitleById(id: number, text: string): Observable<Partial<Task>> {
-    const taskUpdate = { text };
-    return this.http.patch<Partial<Task>>(`${this.apiUrl}/${id}`, taskUpdate)
+  updateTitleById(id: string, text: string): Observable<Partial<Task>> {
+    return this.http.patch<Partial<Task>>(`${this.apiUrl}/${id}`, { text })
   }
 
-  changeStatusById(id:number) {
-    this.http.get<Task>(`${this.apiUrl}/${id}`).subscribe(task => {
-      const newStatus = task.status === 'InProgress' ? 'Completed' : 'InProgress';
-      const updatedTask = { ...task, status: newStatus };
+  changeStatusById(id: string): void {
+    this.http.get<Task>(`${this.apiUrl}/${id}`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(task => {
+      const newStatus: TaskStatus = task.status === 'InProgress' ? 'Completed' : 'InProgress';
+      const updatedTask: Task = { ...task, status: newStatus };
 
-      this.http.patch<Task>(`${this.apiUrl}/${id}`, updatedTask).subscribe();
+      this.http.patch<Task>(`${this.apiUrl}/${id}`, updatedTask)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
