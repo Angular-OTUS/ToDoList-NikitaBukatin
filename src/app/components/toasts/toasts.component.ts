@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ToastsService} from "../../services/toasts.service";
+import {Toast, ToastsService} from "../../services/toasts.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
@@ -26,22 +26,22 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   ]
 })
 export class ToastsComponent implements OnInit {
-  public toasts: any[] = [];
+  public toasts: Toast[] = [];
 
   constructor( protected toastService : ToastsService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.toasts = this.toastService.getToasts();
   }
 
-  toastFade(toastId: number) {
-    const toast = this.toasts.find(toast => toast.id === toastId);
+  toastFade(toastId: number): void {
+    const toast: Toast | undefined = this.toasts.find(toast => toast.id === toastId);
     if (toast) {
       toast.isVisible = false;
     }
   }
 
-  onAnimationDone(event: any, toastId: number) {
+  onAnimationDone(event: any, toastId: number): void {
     if (event.toState === 'hidden') {
       this.toastService.removeToastById(toastId);
     }
