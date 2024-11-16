@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Task, ToDoListTasksService} from "../../services/to-do-list-tasks.service";
-import {catchError, Observable, of, Subject, takeUntil} from "rxjs";
+import {catchError, filter, Observable, of, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-to-do-list-description',
@@ -20,14 +20,15 @@ export class ToDoListDescriptionComponent implements OnInit {
       .subscribe(params => {
       if (params && params['id']) {
         this.TaskService.getTaskById(params['id'])
-          .pipe(takeUntil(this.destroy$),
+          .pipe(
+            takeUntil(this.destroy$),
             catchError( () => {
               return of(null);
-            }))
+            }),
+            filter(result => !!result),
+          )
           .subscribe(task => {
-            if (task) {
-              this.description = task.description;
-            }
+              this.description = task!.description;
           });
       }
     })

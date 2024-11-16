@@ -30,7 +30,9 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "comma-dangle": [2, "always-multiline"],
+        "@typescript-eslint/no-inferrable-types" : "off"
       }
     },
     {

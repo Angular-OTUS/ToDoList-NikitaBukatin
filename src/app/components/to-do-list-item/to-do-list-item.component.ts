@@ -1,26 +1,26 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {ToastsService} from "../../services/toasts.service";
 import {Task, ToDoListTasksService} from "../../services/to-do-list-tasks.service";
-import {catchError, of, Subject, takeUntil} from "rxjs";
+import {catchError, filter, of, Subject, takeUntil} from "rxjs";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-to-do-list-item',
   templateUrl: './to-do-list-item.component.html',
-  styleUrls: ['./to-do-list-item.component.scss']
+  styleUrls: ['./to-do-list-item.component.scss'],
 })
 export class ToDoListItemComponent implements OnDestroy {
   @Input({required: true}) listItem!: Task;
   @Input() secondItem?: boolean;
   @Input() isSelected?: boolean;
   @Output() newItemDelete: EventEmitter<string> = new EventEmitter<string>();
+  public isEdit: boolean = false;
+  public editedTitle: string = '';
   private destroy$: Subject<void> = new Subject<void>();
-  isEdit: boolean = false;
-  editedTitle: string = '';
 
   constructor(private toastService : ToastsService, private todoListTasksService: ToDoListTasksService) {}
 
-  public deleteItem(id: string): void {;
+  public deleteItem(id: string): void {
     this.newItemDelete.emit(id);
   }
 
@@ -39,12 +39,11 @@ export class ToDoListItemComponent implements OnDestroy {
             catchError(() => {
               this.toastService.addToast('Ошибка при изменении задания', 2, 5000)
               return of(null);
-            })
+            }),
+            filter(result => !!result),
           )
-          .subscribe((result) => {
-            if (result) {
+          .subscribe(() => {
               this.toastService.addToast('Задание изменено', 1, 10000);
-            }
           });
       }
       this.isEdit = false;

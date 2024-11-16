@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Task, ToDoListTasksService} from "../../services/to-do-list-tasks.service";
 import {ToastsService} from "../../services/toasts.service";
-import {catchError, of, Subject, takeUntil} from "rxjs";
+import {catchError, filter, of, Subject, takeUntil} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -51,17 +51,16 @@ export class ToDoListComponent implements OnInit, OnDestroy {
         catchError(() => {
           this.toastService.addToast('Ошибка при удалении задания', 2, 5000)
           return of(null);
-        })
+        }),
+        filter(result => !!result),
       )
-      .subscribe((result) => {
-        if (result) {
+      .subscribe(() => {
           this.toastService.addToast('Задание удалено', 2, 10000);
           if (this.selectedItemId === idDel) {
             this.router.navigate(['/tasks']);
             this.selectedItemId = null;
           }
           this.refreshTaskList();
-        }
     })
   }
 
