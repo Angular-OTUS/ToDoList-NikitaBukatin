@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {ToastsService} from "../../services/toasts.service";
-import {Task, ToDoListTasksService} from "../../services/to-do-list-tasks.service";
+import {ToastsService} from "../../../services/toasts.service";
+import {Task, ToDoListTasksService} from "../../../services/to-do-list-tasks.service";
 import {catchError, filter, of, Subject, takeUntil} from "rxjs";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 
@@ -14,6 +14,7 @@ export class ToDoListItemComponent implements OnDestroy {
   @Input() secondItem?: boolean;
   @Input() isSelected?: boolean;
   @Output() newItemDelete: EventEmitter<string> = new EventEmitter<string>();
+  @Output() newItemChange: EventEmitter<string> = new EventEmitter<string>();
   public isEdit: boolean = false;
   public editedTitle: string = '';
   private destroy$: Subject<void> = new Subject<void>();
@@ -49,8 +50,20 @@ export class ToDoListItemComponent implements OnDestroy {
       this.isEdit = false;
     }
   }
-  public onStatusChange(): void {
-    this.todoListTasksService.changeStatusById(this.listItem.id);
+
+  public onStatusChange(task: Task): void {
+    this.todoListTasksService.changeStatusById(task.id, task.status)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError(() => {
+          this.toastService.addToast('Ошибка при изменении статуса', 2, 5000);
+          return of(null);
+        }),
+        filter(result => !!result),
+      )
+      .subscribe(() => {
+        this.newItemChange.emit();
+      });
   }
 
   ngOnDestroy(): void {

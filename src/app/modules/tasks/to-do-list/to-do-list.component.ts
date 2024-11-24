@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Task, ToDoListTasksService} from "../../services/to-do-list-tasks.service";
-import {ToastsService} from "../../services/toasts.service";
+import {Task, ToDoListTasksService} from "../../../services/to-do-list-tasks.service";
+import {ToastsService} from "../../../services/toasts.service";
 import {catchError, filter, of, Subject, takeUntil} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
-  styleUrls: ['./to-do-list.component.scss']
+  styleUrls: ['./to-do-list.component.scss'],
 })
 export class ToDoListComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();

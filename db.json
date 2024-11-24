@@ -16,12 +16,18 @@
       "id": "5809",
       "text": "Task 3",
       "description": "Описание для 3 задачи",
+      "status": "Completed"
+    },
+    {
+      "id": "4ced",
+      "text": "Task 4",
+      "description": "Описание для 4 задания",
       "status": "InProgress"
     },
     {
-      "id": "4f54",
-      "text": "Task 4",
-      "description": "descr 4",
+      "id": "9270",
+      "text": "Task 5",
+      "description": "descr for task 5",
       "status": "InProgress"
     }
   ]

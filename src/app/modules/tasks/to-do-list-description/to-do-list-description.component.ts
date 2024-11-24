@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Task, ToDoListTasksService} from "../../services/to-do-list-tasks.service";
+import {Task, ToDoListTasksService} from "../../../services/to-do-list-tasks.service";
 import {catchError, filter, Observable, of, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-to-do-list-description',
   templateUrl: './to-do-list-description.component.html',
-  styleUrls: ['./to-do-list-description.component.scss']
+  styleUrls: ['./to-do-list-description.component.scss'],
 })
 export class ToDoListDescriptionComponent implements OnInit {
   public description?: string;

@@ -1,13 +1,13 @@
 import {Component, EventEmitter, OnDestroy, Output, ViewChild} from '@angular/core';
-import {ToDoListTasksService} from "../../services/to-do-list-tasks.service";
-import {ToastsService} from "../../services/toasts.service";
+import {ToDoListTasksService} from "../../../services/to-do-list-tasks.service";
+import {ToastsService} from "../../../services/toasts.service";
 import {NgForm} from "@angular/forms";
-import {catchError, filter, of, Subject, takeUntil, throwError} from "rxjs";
+import {catchError, filter, of, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-to-do-create-item',
   templateUrl: './to-do-create-item.component.html',
-  styleUrls: ['./to-do-create-item.component.scss']
+  styleUrls: ['./to-do-create-item.component.scss'],
 })
 export class ToDoCreateItemComponent  implements OnDestroy{
   @Output() taskAdded: EventEmitter<void> = new EventEmitter<void>();

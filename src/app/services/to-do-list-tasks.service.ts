@@ -1,6 +1,6 @@
 import {inject, Injectable, OnDestroy} from '@angular/core';
 import {Observable, Subject, takeUntil} from 'rxjs';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 
 export interface Task {
   id: string;
@@ -12,11 +12,10 @@ export interface Task {
 export type TaskStatus = 'InProgress' | 'Completed';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ToDoListTasksService implements OnDestroy {
+export class ToDoListTasksService {
   private apiUrl: string = 'http://localhost:3000/tasks';
-  private destroy$: Subject<void> = new Subject<void>();
   http: HttpClient = inject(HttpClient);
 
   getTasks(): Observable<Task[]> {
@@ -31,7 +30,7 @@ export class ToDoListTasksService implements OnDestroy {
     const newTask: Omit<Task, 'id'> = {
       text: taskText.trim(),
       description: taskDescription,
-      status: 'InProgress'
+      status: 'InProgress',
     };
 
     return this.http.post<Task>(this.apiUrl, newTask);
@@ -45,21 +44,9 @@ export class ToDoListTasksService implements OnDestroy {
     return this.http.patch<Partial<Task>>(`${this.apiUrl}/${id}`, { text })
   }
 
-  changeStatusById(id: string): void {
-    this.http.get<Task>(`${this.apiUrl}/${id}`)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(task => {
-      const newStatus: TaskStatus = task.status === 'InProgress' ? 'Completed' : 'InProgress';
-      const updatedTask: Task = { ...task, status: newStatus };
-
-      this.http.patch<Task>(`${this.apiUrl}/${id}`, updatedTask)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe();
-    });
+  changeStatusById(id: string, currentStatus: TaskStatus): Observable<Task> {
+    const newStatus: TaskStatus = currentStatus === 'InProgress' ? 'Completed' : 'InProgress';
+    return this.http.patch<Task>(`${this.apiUrl}/${id}`, { status: newStatus });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 }

@@ -1,15 +1,15 @@
 <li [class.second]="secondItem" [class.selected]="isSelected" class="task-item">
 
-    <mat-checkbox (click)="$event.stopPropagation()" (change)="onStatusChange()" [checked]="this.listItem.status === 'Completed'"></mat-checkbox>
+    <mat-checkbox (click)="$event.stopPropagation()" (change)="onStatusChange(this.listItem)" [checked]="this.listItem.status === 'Completed'"></mat-checkbox>
 
   <span *ngIf="!isEdit; else editing"  (dblclick)="editTask()" >{{ listItem.text }}</span>
 
   <ng-template #editing>
     <mat-form-field class="edit-task-input" subscriptSizing="dynamic">
       <mat-label>Измените задание</mat-label>
-      <input matInput [(ngModel)]="editedTitle">
+      <input matInput id="edit-title" [(ngModel)]="editedTitle">
     </mat-form-field>
-    <app-button (click)="saveTask()" [buttonDisabled]="!editedTitle.trim()" appPrompt="Измените задачу и сохраните изменения">Сохранить</app-button>
+    <app-button (newButtonClick)="saveTask()" [buttonDisabled]="!editedTitle.trim()" appPrompt="Измените задачу и сохраните изменения">Сохранить</app-button>
   </ng-template>
   <app-button [heightButton]="'30px'" appPrompt="Нажмите для удаления задания" (newButtonClick)="deleteItem(listItem.id)" aria-label="Удалить задачу">&times;</app-button>
 </li>

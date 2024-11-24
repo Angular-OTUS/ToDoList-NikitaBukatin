@@ -1,0 +1,14 @@
+<div class="board-container">
+  <div class="column">
+    <h3>Все задачи ({{allTasks?.length}})</h3>
+    <div *ngFor="let task of allTasks"><app-to-do-list-item [listItem]="task" (newItemDelete)="deleteTask($event)" (newItemChange)="refreshTaskList()"></app-to-do-list-item></div>
+  </div>
+  <div class="column">
+    <h3>В процессе ({{inProgressTasks?.length}})</h3>
+    <div *ngFor="let task of inProgressTasks"><app-to-do-list-item [listItem]="task" (newItemDelete)="deleteTask($event)" (newItemChange)="refreshTaskList()"></app-to-do-list-item></div>
+  </div>
+  <div class="column">
+    <h3>Выполненные ({{completeTasks?.length}})</h3>
+    <div *ngFor="let task of completeTasks"><app-to-do-list-item [listItem]="task" (newItemDelete)="deleteTask($event)" (newItemChange)="refreshTaskList()"></app-to-do-list-item></div>
+  </div>
+</div>
