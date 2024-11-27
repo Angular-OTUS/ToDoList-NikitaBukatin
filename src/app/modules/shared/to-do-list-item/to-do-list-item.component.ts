@@ -1,13 +1,21 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component, ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output
+} from '@angular/core';
 import {ToastsService} from "../../../services/toasts.service";
 import {Task, ToDoListTasksService} from "../../../services/to-do-list-tasks.service";
 import {catchError, filter, of, Subject, takeUntil} from "rxjs";
-import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-to-do-list-item',
   templateUrl: './to-do-list-item.component.html',
   styleUrls: ['./to-do-list-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoListItemComponent implements OnDestroy {
   @Input({required: true}) listItem!: Task;
@@ -19,7 +27,7 @@ export class ToDoListItemComponent implements OnDestroy {
   public editedTitle: string = '';
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private toastService : ToastsService, private todoListTasksService: ToDoListTasksService) {}
+  constructor(private toastService : ToastsService, private todoListTasksService: ToDoListTasksService, private elementRef: ElementRef) {}
 
   public deleteItem(id: string): void {
     this.newItemDelete.emit(id);
@@ -64,6 +72,13 @@ export class ToDoListItemComponent implements OnDestroy {
       .subscribe(() => {
         this.newItemChange.emit();
       });
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.isEdit = false;
+    }
   }
 
   ngOnDestroy(): void {

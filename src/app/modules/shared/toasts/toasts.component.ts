@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Toast, ToastsService} from "../../../services/toasts.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 

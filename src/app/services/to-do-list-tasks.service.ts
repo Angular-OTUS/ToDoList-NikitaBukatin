@@ -1,5 +1,5 @@
-import {inject, Injectable, OnDestroy} from '@angular/core';
-import {Observable, Subject, takeUntil} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 export interface Task {

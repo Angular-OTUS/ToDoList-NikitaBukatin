@@ -1,23 +1,25 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {ToDoListTasksService, Task, TaskStatus} from "../../../services/to-do-list-tasks.service";
-import {catchError, count, filter, of, Subject, takeUntil} from "rxjs";
+import {ToDoListTasksService, Task} from "../../../services/to-do-list-tasks.service";
+import {catchError, filter, of, Subject, takeUntil} from "rxjs";
 import {ToastsService} from "../../../services/toasts.service";
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
-  //standalone: true,
 })
 export class BoardComponent implements OnInit, OnDestroy {
-  public allTasks: Task[] = [];
+  public allTasks?: Task[] = [];
   public inProgressTasks?: Task[] = [];
   public completeTasks?: Task[] = [];
+  public isLoading: boolean = true;
   private taskService = inject(ToDoListTasksService);
   private toastService = inject(ToastsService);
   private destroy$: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
+    setTimeout(() => {this.isLoading = false;}, 500);
+
     this.getTasks();
   }
 

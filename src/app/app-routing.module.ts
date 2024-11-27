@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {ToDoListComponent} from "./modules/tasks/to-do-list/to-do-list.component";
-import {ToDoListDescriptionComponent} from "./modules/tasks/to-do-list-description/to-do-list-description.component";
-import {BoardComponent} from "./modules/board/board/board.component";
 
 const routes: Routes = [
   {
@@ -12,18 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'tasks',
-    component: ToDoListComponent,
-    children: [
-      {
-        path: ':id',
-        component: ToDoListDescriptionComponent,
-      },
-    ],
+    loadChildren: () => import('./modules/tasks/tasks.module').then((m) => m.TasksModule),
   },
   {
     path: 'board',
-    component: BoardComponent,
-    //loadComponent: () => import('./components/board/board.component').then((c) => c.BoardComponent),
+    loadChildren: () => import('./modules/board/board.module').then((m) => m.BoardModule),
   },
   {
     path: '**',
