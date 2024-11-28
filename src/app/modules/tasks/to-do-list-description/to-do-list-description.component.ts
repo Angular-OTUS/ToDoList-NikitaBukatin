@@ -7,7 +7,7 @@ import {catchError, filter, of, Subject, takeUntil} from "rxjs";
   selector: 'app-to-do-list-description',
   templateUrl: './to-do-list-description.component.html',
   styleUrls: ['./to-do-list-description.component.scss'],
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoListDescriptionComponent implements OnInit {
   public description?: string;
