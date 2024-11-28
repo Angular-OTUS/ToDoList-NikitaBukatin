@@ -8,7 +8,7 @@
         <div class="task-list">
         <div class="filter-status">
           <mat-form-field subscriptSizing="dynamic">
-            <mat-select [(ngModel)]="selectedStatus" >
+            <mat-select id="filter" [(ngModel)]="selectedStatus">
               <mat-option [value]="null">Все</mat-option>
               <mat-option [value]="'Completed'">Выполненные</mat-option>
               <mat-option [value]="'InProgress'">Не выполненные</mat-option>
@@ -41,5 +41,6 @@
 
   <app-to-do-create-item (taskAdded)="refreshTaskList()"></app-to-do-create-item>
 
-  <app-toasts/>
+
 </div>
+<app-toasts/>

@@ -1,5 +1,10 @@
 <mat-toolbar color="primary">
-<span>{{title}}</span>
+  <span>{{title}}</span>
+
+  <div class="main-menu">
+    <a [routerLink]="'/tasks'" routerLinkActive = 'activated'>Backlog</a>
+    <a [routerLink]="'/board'" routerLinkActive = 'activated'>Board</a>
+  </div>
 </mat-toolbar>
 
 <main>
