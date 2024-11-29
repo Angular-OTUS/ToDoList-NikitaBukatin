@@ -1,6 +1,6 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ToDoListTasksService, Task} from "../../../services/to-do-list-tasks.service";
-import {catchError, filter, of, Subject, takeUntil} from "rxjs";
+import {catchError, filter, map, Observable, of, Subject, takeUntil} from "rxjs";
 import {ToastsService} from "../../../services/toasts.service";
 
 @Component({
@@ -9,9 +9,9 @@ import {ToastsService} from "../../../services/toasts.service";
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit, OnDestroy {
-  public allTasks?: Task[] = [];
-  public inProgressTasks?: Task[] = [];
-  public completeTasks?: Task[] = [];
+  public tasks$?: Observable<Task[]>;
+  public inProgressTasks$?: Observable<Task[]>;
+  public completeTasks$?: Observable<Task[]>;
   public isLoading: boolean = true;
   private taskService = inject(ToDoListTasksService);
   private toastService = inject(ToastsService);
@@ -20,7 +20,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     setTimeout(() => {this.isLoading = false;}, 500);
 
+    this.tasks$ = this.taskService.tasks$;
     this.getTasks();
+    this.inProgressTasks$ = this.getFilteredTasks$('InProgress');
+    this.completeTasks$ = this.getFilteredTasks$('Completed');
   }
 
   public getTasks() {
@@ -33,30 +36,13 @@ export class BoardComponent implements OnInit, OnDestroy {
         }),
         filter(result => !!result),
       )
-      .subscribe(tasks => {
-        this.allTasks = tasks!;
-        this.inProgressTasks = tasks!.filter(task => task.status === 'InProgress');
-        this.completeTasks = tasks!.filter(task => task.status === 'Completed');
-      });
+      .subscribe();
   }
 
-  public refreshTaskList(): void {
-    this.getTasks();
-  }
-
-  public deleteTask(idDel: string) : void {
-    this.taskService.deleteTaskById(idDel)
-      .pipe(takeUntil(this.destroy$),
-        catchError(() => {
-          this.toastService.addToast('Ошибка при удалении задания', 2, 5000)
-          return of(null);
-        }),
-        filter(result => !!result),
-      )
-      .subscribe(() => {
-        this.toastService.addToast('Задание удалено', 2, 10000);
-        this.refreshTaskList();
-      })
+  getFilteredTasks$(status: string): Observable<Task[]> | undefined {
+    return this.tasks$?.pipe(
+      map(tasks => tasks.filter(task => task.status === status))
+    );
   }
 
   ngOnDestroy(): void {

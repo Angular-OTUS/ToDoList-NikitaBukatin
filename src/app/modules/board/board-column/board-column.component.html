@@ -1,4 +1,4 @@
 <div>
-  <h3>Все задачи ({{Tasks?.length}})</h3>
-  <app-to-do-list-item *ngFor="let task of Tasks" [listItem]="task" (newItemDelete)="deleteTask(task.id)" (newItemChange)="refreshTaskList()"></app-to-do-list-item>
+  <h3>{{ title }} ({{Tasks?.length}})</h3>
+  <app-to-do-list-item *ngFor="let task of Tasks" [listItem]="task"></app-to-do-list-item>
 </div>

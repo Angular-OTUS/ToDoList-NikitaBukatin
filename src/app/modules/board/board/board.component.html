@@ -5,9 +5,9 @@
 </ng-container>
 <ng-template #boardList>
   <div class="board-container">
-    <app-board-column class="column" [Tasks]="allTasks" (DeleteTaskId)="deleteTask($event)" (ChangeEmit)="refreshTaskList()"></app-board-column>
-    <app-board-column class="column" [Tasks]="inProgressTasks" (DeleteTaskId)="deleteTask($event)" (ChangeEmit)="refreshTaskList()"></app-board-column>
-    <app-board-column class="column" [Tasks]="completeTasks" (DeleteTaskId)="deleteTask($event)" (ChangeEmit)="refreshTaskList()"></app-board-column>
+    <app-board-column class="column" [Tasks]="tasks$ | async" [title]="'Все задачи'"></app-board-column>
+    <app-board-column class="column" [Tasks]="inProgressTasks$ | async" [title]="'В процессе'"></app-board-column>
+    <app-board-column class="column" [Tasks]="completeTasks$ | async" [title]="'Выполненные'"></app-board-column>
   </div>
 </ng-template>
 

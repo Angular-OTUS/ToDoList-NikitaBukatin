@@ -24,9 +24,9 @@
       <div class="task-block">
         <div class="task-list">
           <ul>
-            <ng-container *ngIf="tasks.length; else EmptyTasks">
-              <ng-container *ngFor="let task of tasks; let odd = odd;">
-                <app-to-do-list-item *ngIf="!selectedStatus || task.status === selectedStatus" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" (newItemDelete)="deleteTask($event)"></app-to-do-list-item>
+            <ng-container *ngIf="(tasks$ | async)?.length; else EmptyTasks">
+              <ng-container *ngFor="let task of tasks$ | async; let odd = odd;">
+                <app-to-do-list-item *ngIf="!selectedStatus || task.status === selectedStatus" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task"></app-to-do-list-item>
               </ng-container>
             </ng-container>
 
@@ -39,7 +39,7 @@
     </ng-template>
   </div>
 
-  <app-to-do-create-item (taskAdded)="refreshTaskList()"></app-to-do-create-item>
+  <app-to-do-create-item></app-to-do-create-item>
 
 
 </div>
