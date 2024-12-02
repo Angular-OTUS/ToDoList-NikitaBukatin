@@ -8,7 +8,7 @@
         <div class="task-list">
         <div class="filter-status">
           <mat-form-field subscriptSizing="dynamic">
-            <mat-select id="filter" [(ngModel)]="selectedStatus">
+            <mat-select id="filter" (selectionChange)="onFilterChange($event.value)">
               <mat-option [value]="null">Все</mat-option>
               <mat-option [value]="'Completed'">Выполненные</mat-option>
               <mat-option [value]="'InProgress'">Не выполненные</mat-option>
@@ -24,9 +24,9 @@
       <div class="task-block">
         <div class="task-list">
           <ul>
-            <ng-container *ngIf="(tasks$ | async)?.length; else EmptyTasks">
-              <ng-container *ngFor="let task of tasks$ | async; let odd = odd;">
-                <app-to-do-list-item *ngIf="!selectedStatus || task.status === selectedStatus" [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task"></app-to-do-list-item>
+            <ng-container *ngIf="(filteredTasks$ | async)?.length; else EmptyTasks">
+              <ng-container *ngFor="let task of filteredTasks$ | async; let odd = odd;">
+                <app-to-do-list-item [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task"></app-to-do-list-item>
               </ng-container>
             </ng-container>
 

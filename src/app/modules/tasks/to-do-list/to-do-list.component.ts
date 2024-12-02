@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Task, ToDoListTasksService} from "../../../services/to-do-list-tasks.service";
 import {ToastsService} from "../../../services/toasts.service";
-import {catchError, filter, Observable, of, Subject, takeUntil} from "rxjs";
+import {BehaviorSubject, catchError, combineLatest, filter, map, Observable, of, Subject, takeUntil} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -15,7 +15,8 @@ export class ToDoListComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   selectedItemId: string | null = null;
   tasks$?: Observable<Task[]>;
-  selectedStatus: string | null = null;
+  selectedStatus$ = new BehaviorSubject<string | null>(null);
+  filteredTasks$?: Observable<Task[]>;
 
   constructor(private todoListTasksService: ToDoListTasksService, private toastService: ToastsService, private router: Router, private route: ActivatedRoute) {}
 
@@ -33,6 +34,10 @@ export class ToDoListComponent implements OnInit, OnDestroy {
       )
       .subscribe()
 
+    this.filteredTasks$ = combineLatest([this.tasks$, this.selectedStatus$]).pipe(
+      map( ([tasks, selectedStatus]) => tasks.filter((task: Task) => !selectedStatus || task.status === selectedStatus)),
+    )
+
     this.route.firstChild?.params
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {
@@ -45,6 +50,10 @@ export class ToDoListComponent implements OnInit, OnDestroy {
   public selectItem(selectedId: string): void {
     this.selectedItemId = selectedId;
     this.router.navigate([selectedId], {relativeTo: this.route});
+  }
+
+  public onFilterChange(status: string | null): void {
+    this.selectedStatus$.next(status);
   }
 
   ngOnDestroy(): void {

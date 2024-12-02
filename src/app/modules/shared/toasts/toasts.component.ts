@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Toast, ToastsService} from "../../../services/toasts.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-toasts',
@@ -26,19 +27,16 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   ],
 })
 export class ToastsComponent implements OnInit {
-  public toasts: Toast[] = [];
+  public toasts$?: Observable<Toast[]>;
 
   constructor( protected toastService : ToastsService) {}
 
   ngOnInit(): void {
-    this.toasts = this.toastService.getToasts();
+    this.toasts$ = this.toastService.toasts$;
   }
 
   toastFade(toastId: number): void {
-    const toast: Toast | undefined = this.toasts.find(toast => toast.id === toastId);
-    if (toast) {
-      toast.isVisible = false;
-    }
+    this.toastService.hideToastById(toastId);
   }
 
   onAnimationDone(event: any, toastId: number): void {

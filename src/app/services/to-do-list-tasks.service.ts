@@ -1,7 +1,6 @@
 import {inject, Injectable} from '@angular/core';
-import {BehaviorSubject, catchError, EMPTY, Observable, of, tap} from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {ToastsService} from "./toasts.service";
 
 export interface Task {
   id: string;
@@ -20,7 +19,6 @@ export class ToDoListTasksService {
   private tasksSubject = new BehaviorSubject<Task[]>([]);
   tasks$ = this.tasksSubject.asObservable();
   http: HttpClient = inject(HttpClient);
-  toastService = inject(ToastsService);
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.apiUrl}`)
