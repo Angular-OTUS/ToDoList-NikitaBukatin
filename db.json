@@ -23,12 +23,6 @@
       "text": "Task 4",
       "description": "Описание для 4 задания",
       "status": "InProgress"
-    },
-    {
-      "id": "9270",
-      "text": "Task 5",
-      "description": "descr for task 5",
-      "status": "InProgress"
     }
   ]
 }

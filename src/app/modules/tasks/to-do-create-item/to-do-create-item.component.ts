@@ -11,7 +11,7 @@ import {catchError, filter, of, Subject, takeUntil} from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoCreateItemComponent  implements OnDestroy{
-  @Output() taskAdded: EventEmitter<void> = new EventEmitter<void>();
+  //@Output() taskAdded: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('taskForm') taskForm?: NgForm;
   public newTask: string = '';
   public newDescription: string = '';
@@ -31,7 +31,6 @@ export class ToDoCreateItemComponent  implements OnDestroy{
           filter(result => !!result),
         )
         .subscribe(() => {
-            this.taskAdded.emit();
             this.toastService.addToast('Задание создано', 1, 10000);
             this.taskForm?.resetForm();
       });

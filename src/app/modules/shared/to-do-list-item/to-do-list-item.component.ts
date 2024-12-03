@@ -10,6 +10,7 @@ import {
 import {ToastsService} from "../../../services/toasts.service";
 import {Task, ToDoListTasksService} from "../../../services/to-do-list-tasks.service";
 import {catchError, filter, of, Subject, takeUntil} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-to-do-list-item',
@@ -21,16 +22,27 @@ export class ToDoListItemComponent implements OnDestroy {
   @Input({required: true}) listItem!: Task;
   @Input() secondItem?: boolean;
   @Input() isSelected?: boolean;
-  @Output() newItemDelete: EventEmitter<string> = new EventEmitter<string>();
-  @Output() newItemChange: EventEmitter<string> = new EventEmitter<string>();
   public isEdit: boolean = false;
   public editedTitle: string = '';
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private toastService : ToastsService, private todoListTasksService: ToDoListTasksService, private elementRef: ElementRef) {}
+  constructor(private toastService : ToastsService, private todoListTasksService: ToDoListTasksService, private elementRef: ElementRef, private router: Router) {}
 
   public deleteItem(id: string): void {
-    this.newItemDelete.emit(id);
+    this.todoListTasksService.deleteTaskById(id)
+      .pipe(takeUntil(this.destroy$),
+        catchError(() => {
+          this.toastService.addToast('Ошибка при удалении задания', 2, 5000)
+          return of(null);
+        }),
+        filter(result => !!result),
+      )
+      .subscribe(() => {
+        this.toastService.addToast('Задание удалено', 2, 10000);
+        if (this.isSelected) {
+          this.router.navigate(['/tasks']);
+        }
+      })
   }
 
   public editTask(): void {
@@ -69,9 +81,7 @@ export class ToDoListItemComponent implements OnDestroy {
         }),
         filter(result => !!result),
       )
-      .subscribe(() => {
-        this.newItemChange.emit();
-      });
+      .subscribe();
   }
 
   @HostListener('document:click', ['$event'])
