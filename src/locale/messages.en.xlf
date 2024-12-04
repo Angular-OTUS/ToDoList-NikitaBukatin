@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="ru" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="8803684293925742239" datatype="html">
+        <source>Все задачи</source>
+        <target>All tasks</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/board/board/board.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7694729960518672631" datatype="html">
+        <source>В процессе</source>
+        <target>In progress</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/board/board/board.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2322355230672138674" datatype="html">
+        <source>Выполненные</source>
+        <target>Done</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/board/board/board.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-list/to-do-list.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2775250908885654694" datatype="html">
+        <source>Измените задачу и сохраните изменения</source>
+        <target>Edit the task and save changes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shared/to-do-list-item/to-do-list-item.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6519052054944111814" datatype="html">
+        <source>Нажмите для удаления задания</source>
+        <target>Click to delete a task</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shared/to-do-list-item/to-do-list-item.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="525053579152072480" datatype="html">
+        <source>Удалить задачу</source>
+        <target>Delete task</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shared/to-do-list-item/to-do-list-item.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8482239239408992103" datatype="html">
+        <source>Введите задание</source>
+        <target>Enter a task</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-create-item/to-do-create-item.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7114881530626419310" datatype="html">
+        <source>Опишите задачу и добавьте по клику</source>
+        <target>Describe the task and add by click</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-create-item/to-do-create-item.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="486084184107908667" datatype="html">
+        <source>Добавить задачу</source>
+        <target>Add a task</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-create-item/to-do-create-item.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1445075180751249498" datatype="html">
+        <source>Описание задания</source>
+        <target>Description of the task</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-create-item/to-do-create-item.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3254843563919119449" datatype="html">
+        <source>Добавьте описание</source>
+        <target>Add a description</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-create-item/to-do-create-item.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7729929787384972942" datatype="html">
+        <source>Нет описания</source>
+        <target>No description</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-list-description/to-do-list-description.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1809455309296257957" datatype="html">
+        <source>Список задач:</source>
+        <target>List of tasks:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-list/to-do-list.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8681793891983971203" datatype="html">
+        <source>Все</source>
+        <target>All</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-list/to-do-list.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2610988281796381034" datatype="html">
+        <source>Не выполненные</source>
+        <target>In progress</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-list/to-do-list.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="658239319397169719" datatype="html">
+        <source>Выберите фильтр</source>
+        <target>Select filter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-list/to-do-list.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="109087417595031858" datatype="html">
+        <source>Выберите эту задачу для просмотра описания</source>
+        <target>Select this task to view a description</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-list/to-do-list.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1469965013589462318" datatype="html">
+        <source> Заданий пока нет, но вы можете их добавить </source>
+        <target>There are no tasks yet, but you can add them</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/tasks/to-do-list/to-do-list.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -22,7 +22,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ToDoListComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
-  title:  string = "Список задач:";
   isLoading: boolean = true;
   selectedItemId: string | null = null;
   tasks$?: Observable<Task[]>;

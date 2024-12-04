@@ -1,4 +1,4 @@
 <div class="description-block">
   <div class="description-text" *ngIf="description; else noDescription">{{ description }}</div>
-  <ng-template #noDescription><div class="description-text">Нет описания</div></ng-template>
+  <ng-template #noDescription><div class="description-text" i18n>Нет описания</div></ng-template>
 </div>

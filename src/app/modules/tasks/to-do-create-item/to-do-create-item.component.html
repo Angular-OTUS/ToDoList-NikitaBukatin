@@ -2,17 +2,17 @@
   <form #taskForm="ngForm" class="task-block">
     <div class="task-list">
       <mat-form-field appearance="outline" class="task-input" subscriptSizing="dynamic">
-        <mat-label>Введите задание</mat-label>
+        <mat-label i18n>Введите задание</mat-label>
         <input matInput id="task" name="task" [(ngModel)]="newTask" (keydown.enter)="addTask()" required minlength="3">
       </mat-form-field>
       <div class="task-button">
-        <app-button [heightButton]="'56px'" [buttonDisabled]="!taskForm.valid" appPrompt="Опишите задачу и добавьте по клику" (newButtonClick)="addTask()">Добавить задачу</app-button>
+        <app-button [heightButton]="'56px'" [buttonDisabled]="!taskForm.valid" appPrompt="Опишите задачу и добавьте по клику" i18n-appPrompt (newButtonClick)="addTask()" i18n>Добавить задачу</app-button>
       </div>
     </div>
     <div class="description-block">
       <mat-form-field class="area-input" appearance="outline">
-        <mat-label>Описание задания</mat-label>
-        <textarea matInput id="description" name="description" [(ngModel)]="newDescription" placeholder="Добавьте описание"></textarea>
+        <mat-label i18n>Описание задания</mat-label>
+        <textarea matInput id="description" name="description" [(ngModel)]="newDescription" placeholder="Добавьте описание" i18n-placeholder></textarea>
       </mat-form-field>
     </div>
   </form>

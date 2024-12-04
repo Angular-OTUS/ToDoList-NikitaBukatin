@@ -10,6 +10,12 @@
           "style": "scss"
         }
       },
+      "i18n": {
+        "sourceLocale": "ru",
+        "locales": {
+          "en-US": "src/locale/messages.en.xlf"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -17,6 +23,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": true,
+            "i18nMissingTranslation": "warning",
+            "i18nDuplicateTranslation": "warning",
             "outputPath": "dist/homework",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -51,6 +60,12 @@
               ],
               "outputHashing": "all"
             },
+            "ru": {
+              "localize": ["ru"]
+            },
+            "en": {
+              "localize": ["en-US"]
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -70,9 +85,15 @@
             },
             "development": {
               "browserTarget": "homework:build:development"
+            },
+            "ru": {
+              "browserTarget": "homework:build:development,ru"
+            },
+            "en": {
+              "browserTarget": "homework:build:development,en"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "ru"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

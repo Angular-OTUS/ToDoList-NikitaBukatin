@@ -5,6 +5,10 @@
     <a [routerLink]="'/tasks'" routerLinkActive = 'activated'>Backlog</a>
     <a [routerLink]="'/board'" routerLinkActive = 'activated'>Board</a>
   </div>
+
+  <div class="lang">
+    <app-button *ngFor="let locale of locales" (newButtonClick)="switchLocale(locale.url)" [heightButton]="'40px'">{{locale.title}}</app-button>
+  </div>
 </mat-toolbar>
 
 <main>
