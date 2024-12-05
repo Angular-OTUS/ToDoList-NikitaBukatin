@@ -1,7 +1,18 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Task, ToDoListTasksService} from "../../../services/to-do-list-tasks.service";
 import {ToastsService} from "../../../services/toasts.service";
-import {BehaviorSubject, catchError, combineLatest, filter, map, Observable, of, Subject, takeUntil} from "rxjs";
+import {
+  BehaviorSubject,
+  catchError,
+  combineLatest,
+  filter, iif,
+  map,
+  Observable,
+  of,
+  Subject,
+  switchMap,
+  takeUntil
+} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -11,7 +22,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ToDoListComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
-  title:  string = "Список задач:";
   isLoading: boolean = true;
   selectedItemId: string | null = null;
   tasks$?: Observable<Task[]>;
@@ -39,11 +49,18 @@ export class ToDoListComponent implements OnInit, OnDestroy {
     )
 
     this.route.firstChild?.params
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(params => {
-      if (params['id']) {
-        this.selectedItemId = params['id'];
-      } else this.selectedItemId = null;
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(params =>
+          iif(
+            () => !!params['id'],
+            of(params['id']),
+            of(null)
+          )
+        )
+      )
+      .subscribe(selectedId => {
+        this.selectedItemId = selectedId;
       });
   }
 

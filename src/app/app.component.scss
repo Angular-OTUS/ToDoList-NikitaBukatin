@@ -10,12 +10,16 @@ mat-toolbar span {
 }
 
 .main-menu {
-  margin-left: 35px;
+  display: flex;
+  gap: 10px;
+  margin-left: 40px;
 }
 
-.main-menu a {
-  margin-left: 10px;
-}
 .activated  {
   color: white;
+}
+.lang {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
 }

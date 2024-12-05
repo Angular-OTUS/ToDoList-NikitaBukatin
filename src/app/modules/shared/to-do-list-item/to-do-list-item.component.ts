@@ -1,11 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component, ElementRef,
-  EventEmitter,
   HostListener,
   Input,
   OnDestroy,
-  Output
 } from '@angular/core';
 import {ToastsService} from "../../../services/toasts.service";
 import {Task, ToDoListTasksService} from "../../../services/to-do-list-tasks.service";

@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'TasksBoard';
+  public title = 'TasksBoard';
+  public locales = [
+    { locale: 'en', title: 'English', url: 'http://localhost:4201' },
+    { locale: 'ru', title: 'Русский', url: 'http://localhost:4200' },
+  ]
+
+  public switchLocale(locale: string): void {
+    window.location.href = locale;
+  }
 }

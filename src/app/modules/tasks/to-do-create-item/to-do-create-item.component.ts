@@ -11,7 +11,6 @@ import {catchError, filter, of, Subject, takeUntil} from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoCreateItemComponent  implements OnDestroy{
-  //@Output() taskAdded: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('taskForm') taskForm?: NgForm;
   public newTask: string = '';
   public newDescription: string = '';

@@ -9,7 +9,7 @@
       <mat-label>Измените задание</mat-label>
       <input matInput id="edit-title" [(ngModel)]="editedTitle">
     </mat-form-field>
-    <app-button (newButtonClick)="saveTask()" [buttonDisabled]="!editedTitle.trim()" appPrompt="Измените задачу и сохраните изменения">Сохранить</app-button>
+    <app-button (newButtonClick)="saveTask()" [buttonDisabled]="!editedTitle.trim()" i18n-appPrompt appPrompt="Измените задачу и сохраните изменения">Сохранить</app-button>
   </ng-template>
-  <app-button [heightButton]="'30px'" appPrompt="Нажмите для удаления задания" (newButtonClick)="deleteItem(listItem.id)" aria-label="Удалить задачу">&times;</app-button>
+  <app-button [heightButton]="'30px'" appPrompt="Нажмите для удаления задания" i18n-appPrompt (newButtonClick)="deleteItem(listItem.id)" i18n-aria-label aria-label="Удалить задачу">&times;</app-button>
 </li>

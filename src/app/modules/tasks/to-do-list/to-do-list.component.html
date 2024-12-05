@@ -1,5 +1,5 @@
 <div class="todo-container">
-  <h2>{{ title }}</h2>
+  <h2 i18n>Список задач:</h2>
 
   <div class="list-group">
     <ng-container *ngIf="isLoading; else taskList"><app-loading-spinner [diameter]="70"/></ng-container>
@@ -9,11 +9,11 @@
         <div class="filter-status">
           <mat-form-field subscriptSizing="dynamic">
             <mat-select id="filter" (selectionChange)="onFilterChange($event.value)">
-              <mat-option [value]="null">Все</mat-option>
-              <mat-option [value]="'Completed'">Выполненные</mat-option>
-              <mat-option [value]="'InProgress'">Не выполненные</mat-option>
+              <mat-option [value]="null" i18n>Все</mat-option>
+              <mat-option [value]="'Completed'" i18n>Выполненные</mat-option>
+              <mat-option [value]="'InProgress'" i18n>Не выполненные</mat-option>
             </mat-select>
-            <mat-label>Выберите фильтр</mat-label>
+            <mat-label i18n>Выберите фильтр</mat-label>
           </mat-form-field>
         </div>
         </div>
@@ -26,11 +26,11 @@
           <ul>
             <ng-container *ngIf="(filteredTasks$ | async)?.length; else EmptyTasks">
               <ng-container *ngFor="let task of filteredTasks$ | async; let odd = odd;">
-                <app-to-do-list-item [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task"></app-to-do-list-item>
+                <app-to-do-list-item [isSelected]="task.id === selectedItemId" [secondItem]="odd" (click)="selectItem(task.id)" appPrompt="Выберите эту задачу для просмотра описания" [listItem]="task" i18n-appPrompt></app-to-do-list-item>
               </ng-container>
             </ng-container>
 
-            <ng-template #EmptyTasks><li class="empty-task"> Заданий пока нет, но вы можете их добавить </li></ng-template>
+            <ng-template #EmptyTasks><li class="empty-task" i18n> Заданий пока нет, но вы можете их добавить </li></ng-template>
           </ul>
         </div>
 
